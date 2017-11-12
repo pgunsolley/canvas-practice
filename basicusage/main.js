@@ -3,32 +3,79 @@
      * The canvas examples.
      */
     var context,
-        examples = [
         // Example Canvas Drawings.
         // Pass the context in, and render the example.
-        function drawExampleRectangles(ctx) {
-            displayExampleTitle('Draw Standard Rect and Alpha Rect');
-            // Draw rectangle using rgb color.
-            ctx.fillStyle = 'rgb(200, 0, 0)';
-            ctx.fillRect(10, 10, 50, 50);
+        examples = [
+            function drawExampleRectangles(ctx) {
+                displayExampleTitle('Draw Standard Rect and Alpha Rect');
+                // Draw rectangle using rgb color.
+                ctx.fillStyle = 'rgb(200, 0, 0)';
+                ctx.fillRect(10, 10, 50, 50);
 
-            // Draw transparent rectangle using alpha rgb color (argb).
-            ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
-            ctx.fillRect(30, 30, 50, 50);
-        },
+                // Draw transparent rectangle using alpha rgb color (argb).
+                ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
+                ctx.fillRect(30, 30, 50, 50);
+            },
 
-        function drawAllRectTypes(ctx) {
-            displayExampleTitle('Draw All Rect Types');
+            function drawAllRectTypes(ctx) {
+                displayExampleTitle('Draw All Rect Types');
 
-            // Draw a large black square, 100px on each side.
-            ctx.fillRect(25, 25, 100, 100);
+                // Draw a large black square, 100px on each side.
+                ctx.fillRect(25, 25, 100, 100);
 
-            // Erases a 60x60 square from the center.
-            ctx.clearRect(45, 45, 60, 60);
+                // Erases a 60x60 square from the center.
+                ctx.clearRect(45, 45, 60, 60);
 
-            // Create a rectangular outline 50x50 pixels within the cleared square.
-            ctx.strokeRect(50, 50, 50, 50);
-        }
+                // Create a rectangular outline 50x50 pixels within the cleared square.
+                ctx.strokeRect(50, 50, 50, 50);
+            },
+
+            function drawTriangleUsingPath(ctx) {
+                displayExampleTitle('Draw A Triangle Using Paths.');
+
+                // Initialize the path, but does not draw anything yet.
+                ctx.beginPath();
+
+                // "Moves the pen" to the beginning of the path.
+                ctx.moveTo(75, 50);
+                ctx.lineTo(100, 75);
+                ctx.lineTo(100, 25);
+                ctx.fill();
+            },
+
+            function drawSmilyFacePath(ctx) {
+                displayExampleTitle('Draw A Smiley Face Using Paths.');
+
+                ctx.beginPath();
+
+                ctx.arc(75, 75, 50, 0, Math.PI * 2, true); // Outer circle.
+                ctx.moveTo(110, 75);
+                ctx.arc(75, 75, 35, 0, Math.PI, false); // Mouth (clockwise).
+                ctx.moveTo(65, 65);
+                ctx.arc(60, 65, 5, 0, Math.PI * 2, true); // Left eye.
+                ctx.moveTo(95, 65);
+                ctx.arc(90, 65, 5, 0, Math.PI * 2, true); // Right eye.
+                ctx.stroke();
+            },
+
+            function drawTrianglesWithLinePath(ctx) {
+                displayExampleTitle('Draw 2 Triangles using Path LineTo.');
+
+                // Filled triangle.
+                ctx.beginPath();
+                ctx.moveTo(25, 25);
+                ctx.lineTo(105, 25);
+                ctx.lineTo(25, 105);
+                ctx.fill();
+
+                // Stroked triangle.
+                ctx.beginPath();
+                ctx.moveTo(125, 125);
+                ctx.lineTo(125, 45);
+                ctx.lineTo(45, 125);
+                ctx.closePath(); // Stroked shapes are not automatically closed.
+                ctx.stroke();
+            }
     ];
 
     /**
@@ -65,17 +112,16 @@
 
     /**
      * The next button that scrolls through the examples.
-     *
-     * TODO: Reset the canvas before rendering example.
      */
     function createNextExampleButton(element, context) {
         var _button = document.createElement('button'),
-            buttonText = 'Next Example',
+            buttonText = 'Next',
             lastExample = -2,
             currentExample = -1;
         _button.innerHTML = buttonText;
         _button.onclick = function(e) {
             if (examples.length - 1 > currentExample && currentExample > lastExample) {
+                reset();
                 currentExample++;
                 examples[currentExample](context);
                 lastExample = currentExample - 1;
