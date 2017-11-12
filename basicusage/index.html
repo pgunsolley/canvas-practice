@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Canvas Tutorial: Basic Usage</title>
+        <script src="main.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <div id="main">
+            <!--
+                The canvas element:
+                A canvas element only has a width and height attribute,
+                however you can attach global HTML attributes (like id)
+
+                Provide a fallback:
+                It is best to provide a fallback for browsers that do not support
+                canvas. You do this by inserting your fallback content inside
+                of the canvas tags. Browsers that support canvas will ignore the
+                content, and browsers that do not support canvas will show the content.
+                Note: The canvas  tag REQUIRES the closing tag.
+            -->
+            <canvas id="tutorial" width="150" height="150"></canvas>
+            <div id="example-title"></div>
+        </div>
+    </body>
+</html>
